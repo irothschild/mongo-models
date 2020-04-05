@@ -17,15 +17,19 @@ const dbFromArgs = function (args) {
 
 
 class MongoModels {
-    constructor(data) {
+    constructor(data, validate) {
 
-        const result = this.constructor.validate(data);
+        if (validate !== false) {
+            const result = this.constructor.validate(data);
 
-        if (result.error) {
-            throw result.error;
+            if (result.error) {
+                throw result.error;
+            }
+
+            data = result.value;
         }
 
-        Object.assign(this, result.value);
+        Object.assign(this, data);
     }
 
 
@@ -366,14 +370,14 @@ class MongoModels {
         if (Object.prototype.toString.call(result) === '[object Array]') {
             result.forEach((item, index) => {
 
-                result[index] = new this(item);
+                result[index] = new this(item, false);
             });
         }
 
         if (Object.prototype.toString.call(result) === '[object Object]') {
             if (result.hasOwnProperty('value') && !result.hasOwnProperty('_id')) {
                 if (result.value) {
-                    result = new this(result.value);
+                    result = new this(result.value, false);
                 }
                 else {
                     result = undefined;
@@ -382,13 +386,13 @@ class MongoModels {
             else if (result.hasOwnProperty('ops')) {
                 result.ops.forEach((item, index) => {
 
-                    result.ops[index] = new this(item);
+                    result.ops[index] = new this(item, false);
                 });
 
                 result = result.ops;
             }
             else if (result.hasOwnProperty('_id')) {
-                result = new this(result);
+                result = new this(result, false);
             }
         }
 
