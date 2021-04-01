@@ -33,6 +33,7 @@
     "@hapi/code": "5.x.x",
     "express": "4.x.x",
     "hapitoc": "1.x.x",
+    "@hapi/joi": "15.x.x",
     "@hapi/lab": "19.x.x",
     "mongodb": "3.x.x"
   },
@@ -40,7 +41,6 @@
     "mongodb": "3.x.x"
   },
   "dependencies": {
-    "@hapi/hoek": "9.x.x",
-    "@hapi/joi": "15.x.x"
+    "@hapi/hoek": "9.x.x"
   }
 }
